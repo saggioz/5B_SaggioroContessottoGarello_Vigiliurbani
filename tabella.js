@@ -18,5 +18,5 @@ const createTable = (parentElement) => {
 }
 
 const table = createTable(document.querySelector("#table"));
-table.build([["INDIRIZZO", "TARGHE COINVOLTE", "DATA E ORA", "NUMERO FERITI", "NUMERO MORTI"]]);
+table.build([["INDIRIZZO", "TARGHE COINVOLTE", "DATA", "ORA", "NUMERO FERITI", "NUMERO MORTI"]]);
 table.render();
