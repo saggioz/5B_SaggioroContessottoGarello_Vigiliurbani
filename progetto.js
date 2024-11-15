@@ -69,42 +69,6 @@ const GETDATI = (chiave,token) => {
 }
 
 
-const createForm = (parentElement) => {
-    let data;
-    let callback = null;
-  
-    return {  
-        setLabels: (labels) => { data = labels; },  
-        onsubmit: (callbackInput) => { callback = callbackInput},
-        render: () => { 
-            parentElement.innerHTML = 
-            data.map((name, index) => {
-                return `<div>${name}\n<input id="${name}" type="text" /></div>`;
-            }).join('\n')
-            + "<button type='button' id='submit'>Submit</button>";  
-            let bottonevia = document.getElementById("submit");
-            let via = document.getElementById("Luogo")
-            bottonevia.onclick = () => {
-                let indirizzo= via.value;
-                indirizzo=indirizzo.replace(" ","%20")
-                console.log(indirizzo)
-                bottonevia.value="";
-                GETMAPPA(indirizzo).then((dati)=>{
-                    let via_ricevuta=dati[0];
-                    let longitudine=via_ricevuta["lon"];
-                    let latitudine=via_ricevuta["lat"];
-                    SETDATI(indirizzo+" ", longitudine, latitudine).then(render);
-                });
-            }         
-        },
-    };
-};
-  
-const form = createForm(document.querySelector('#app'));
-form.setLabels(["Luogo"]);
-form.onsubmit(console.log);
-form.render();
-
 let places = [
     {
         name: "Piazza del Duomo",
