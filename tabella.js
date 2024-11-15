@@ -5,7 +5,7 @@ const createTable = (parentElement) => {
             data = dataInput;
         },
         render: () => {
-            let htmlTable = "<table>";
+            let htmlTable = "<table class='table table-bordered'>";
             htmlTable += data.map((row) => 
                 "<tr>" + row.map((col) => 
                     "<td>" + col + "</td>"
