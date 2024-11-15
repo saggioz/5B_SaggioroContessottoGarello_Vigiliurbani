@@ -134,9 +134,12 @@ const Booking = (result) => {
 // Creazione del form
 const form = createForm();
 form.setlabels([
+    ["Indirizzo", "text"],
+    ["Targhe coinvolte", "text"],
     ["Data", "date"],
-    ["Orario Prenotazione", "dropdown", ["08:00", "09:00", "10:00", "11:00", "12:00"]],
-    ["Nominativo", "text"],
+    ["Orario", "time"],
+    ["Numero feriti", "number"],
+    ["Numero morti", "number"]
 ]);
 
 // Callback della prenotazione
