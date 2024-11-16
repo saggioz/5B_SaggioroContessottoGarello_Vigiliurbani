@@ -62,19 +62,7 @@ const createForm = () => {
                 return;
             }
 
-            const nom_rep = document.querySelector(".active")?.textContent.trim();
-            if (!nom_rep) {
-                alert("Errore: nessun reparto selezionato.");
-                return;
-            }
-
-            result["Reparto"] = nom_rep;
-            const chiave_d = `${result["Reparto"]}/${result["Data"]}/${result["Orario Prenotazione"]}`;
-            Aggiorna(chiave_d, result["Nominativo"]);
-            document.getElementById("Message").innerText = "Prenotazione eseguita con successo";
-
-            if (callback) callback(result);
-
+            console.log("Dati inviati: ", result);
             closeModal();
         };
     };
