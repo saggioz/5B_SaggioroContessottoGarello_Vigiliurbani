@@ -41,11 +41,6 @@ const createForm = () => {
                 result[fieldId] = value;
             });
 
-            if (!isValid) {
-                document.getElementById("Message").innerText = "Compilare tutti i campi!";
-                return;
-            }
-
             console.log("Dati inviati: ", result);
 
             if (callback) {
@@ -88,7 +83,9 @@ const createForm = () => {
 const form = createForm();
 form.setlabels([
     ["Indirizzo", "text"],
-    ["Targhe coinvolte", "text"],
+    ["Targa1", "text"],
+    ["Targa2", "text"],
+    ["Targa3", "text"],
     ["Data", "date"],
     ["Orario", "time"],
     ["Numero feriti", "number"],
@@ -98,10 +95,32 @@ form.setlabels([
 // Callback per l'inserimento nella tabella
 form.submit((formData) => {
     console.log("Dati inviati:", formData);
+    
+    const campiObbligatori = ["Indirizzo", "Data", "Orario", "Numero feriti", "Numero morti"];
+    let isValid = true;
+
+    // Controllo dei campi obbligatori
+    campiObbligatori.forEach((fieldId) => {
+        const value = formData[fieldId];
+        if (!value) {
+            isValid = false;
+        }
+    });
+
+    if (!isValid) {
+        document.getElementById("Message").innerText = "Compilare tutti i campi obbligatori!";
+        return;
+    }
+
+    const targhe = [
+    formData["Targa1"],
+    formData["Targa2"],
+    formData["Targa3"]
+    ].filter((targa) => targa);
 
     const nuovaRiga = [
         formData["Indirizzo"],
-        formData["Targhe coinvolte"],
+        targhe.join(", "),
         formData["Data"],
         formData["Orario"],
         formData["Numero feriti"],
