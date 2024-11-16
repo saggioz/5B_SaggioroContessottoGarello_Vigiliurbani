@@ -1,5 +1,5 @@
 const createTable = (parentElement) => {
-    let data;
+    let data = [];
     return {
         build: (dataInput) => {
             data = dataInput;
@@ -13,9 +13,13 @@ const createTable = (parentElement) => {
             ).join("") + "</tr>";
             htmlTable += "</table>";
             parentElement.innerHTML = htmlTable;
+        },
+        addRow: (newRow) => {
+            data.push(newRow);
+            render();
         }
-    }
-}
+    };
+};
 
 const table = createTable(document.querySelector("#table"));
 table.build([["INDIRIZZO", "TARGHE COINVOLTE", "DATA", "ORA", "NUMERO FERITI", "NUMERO MORTI"]]);
