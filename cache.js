@@ -70,7 +70,7 @@ const Aggiorna = (chiave_d,paziente)=>{
       result_get[chiave_d]=paziente
       SET(chiave, result_get).then(r=>{
          console.log(r)
-         if (r === "Ok"){
+         if (r === "Ok") {
             GET(chiave).then((result_get) => {
                console.log("genera")
                console.log(result_get)

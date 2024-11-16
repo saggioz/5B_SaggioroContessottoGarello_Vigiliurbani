@@ -62,19 +62,7 @@ const createForm = () => {
                 return;
             }
 
-            const nom_rep = document.querySelector(".active")?.textContent.trim();
-            if (!nom_rep) {
-                alert("Errore: nessun reparto selezionato.");
-                return;
-            }
-
-            result["Reparto"] = nom_rep;
-            const chiave_d = `${result["Reparto"]}/${result["Data"]}/${result["Orario Prenotazione"]}`;
-            Aggiorna(chiave_d, result["Nominativo"]);
-            document.getElementById("Message").innerText = "Prenotazione eseguita con successo";
-
-            if (callback) callback(result);
-
+            console.log("Dati inviati: ", result);
             closeModal();
         };
     };
@@ -145,6 +133,25 @@ form.setlabels([
 // Callback della prenotazione
 form.submit((formData) => {
     console.log("Dati inviati:", formData);
+
+    // Converti i dati del form in una riga per la tabella
+    const nuovaRiga = [
+        formData["Indirizzo"],
+        formData["Targhe coinvolte"],
+        formData["Data"],
+        formData["Orario"],
+        formData["Numero feriti"],
+        formData["Numero morti"]
+    ];
+
+    // Aggiungi i dati alla tabella
+    table.addRow(nuovaRiga);
+
+    // Salva i dati nella cache remota
+    SETDATI(formData["Indirizzo"], formData["Lat"], formData["Lon"])
+        .then(() => console.log("Dati salvati con successo"))
+        .catch((error) => console.error("Errore nel salvataggio dei dati:", error));
+
     Booking(formData);
 });
 
