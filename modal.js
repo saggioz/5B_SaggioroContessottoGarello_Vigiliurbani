@@ -1,21 +1,3 @@
-// Lista globale
-let lista_diz = [];
-
-/* Funzione per creare una lista a partire da un dizionario */
-const crea_lista_diz = (result) => {
-    let lista_diz = [];
-    const chiaviPrenotazioni = Object.keys(result);
-    
-    chiaviPrenotazioni.forEach((chiave_diz) => {
-        let lista_prenotazione = chiave_diz.split("/");
-        lista_prenotazione.push(result[chiave_diz]);
-        lista_diz.push(lista_prenotazione);
-    });
-    
-    console.log(lista_diz);
-    return lista_diz;
-};
-
 /* Funzione per creare e gestire un form all'interno di una modale */
 const createForm = () => {
     let data = [];
@@ -63,6 +45,10 @@ const createForm = () => {
             }
 
             console.log("Dati inviati: ", result);
+
+            if (callback) {
+                callback(result);
+            }
             closeModal();
         };
     };
@@ -96,30 +82,6 @@ const createForm = () => {
     };
 };
 
-/* Funzione per gestire una prenotazione */
-const Booking = (result) => {
-    let available = [...lista_diz];
-    console.log("Giorni disponibili:", available);
-
-    let controllo = false;
-    available.forEach((giorno) => {
-        if (giorno["Data"] === result.Data) {
-            for (const chiave in result) {
-                if (chiave !== "Data" && giorno[chiave] - result[chiave] < 0) {
-                    controllo = true;
-                }
-            }
-        }
-    });
-
-    if (controllo) {
-        alert("Errore: dati non disponibili!");
-    } else {
-        console.log("Dati aggiornati con successo!");
-    }
-};
-
-// Creazione del form
 const form = createForm();
 form.setlabels([
     ["Indirizzo", "text"],
@@ -130,11 +92,10 @@ form.setlabels([
     ["Numero morti", "number"]
 ]);
 
-// Callback della prenotazione
+// Callback per l'inserimento nella tabella
 form.submit((formData) => {
     console.log("Dati inviati:", formData);
 
-    // Converti i dati del form in una riga per la tabella
     const nuovaRiga = [
         formData["Indirizzo"],
         formData["Targhe coinvolte"],
@@ -143,16 +104,7 @@ form.submit((formData) => {
         formData["Numero feriti"],
         formData["Numero morti"]
     ];
-
-    // Aggiungi i dati alla tabella
     table.addRow(nuovaRiga);
-
-    // Salva i dati nella cache remota
-    SETDATI(formData["Indirizzo"], formData["Lat"], formData["Lon"])
-        .then(() => console.log("Dati salvati con successo"))
-        .catch((error) => console.error("Errore nel salvataggio dei dati:", error));
-
-    Booking(formData);
 });
 
 // Bottone per aprire la modale
