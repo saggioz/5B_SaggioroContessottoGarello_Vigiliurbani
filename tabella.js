@@ -14,9 +14,9 @@ const createTable = (parentElement) => {
             htmlTable += "</table>";
             parentElement.innerHTML = htmlTable;
         },
-        addRow: (newRow) => {
+        addRow: function(newRow) {
             data.push(newRow);
-            render();
+            this.render();
         }
     };
 };
@@ -24,3 +24,4 @@ const createTable = (parentElement) => {
 const table = createTable(document.querySelector("#table"));
 table.build([["INDIRIZZO", "TARGHE COINVOLTE", "DATA", "ORA", "NUMERO FERITI", "NUMERO MORTI"]]);
 table.render();
+export { table };

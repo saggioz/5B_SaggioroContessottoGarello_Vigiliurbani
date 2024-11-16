@@ -1,3 +1,5 @@
+import { table } from './tabella.js';
+
 /* Funzione per creare e gestire un form all'interno di una modale */
 const createForm = () => {
     let data = [];
@@ -49,6 +51,7 @@ const createForm = () => {
             if (callback) {
                 callback(result);
             }
+
             closeModal();
         };
     };
