@@ -145,6 +145,25 @@ form.setlabels([
 // Callback della prenotazione
 form.submit((formData) => {
     console.log("Dati inviati:", formData);
+
+    // Converti i dati del form in una riga per la tabella
+    const nuovaRiga = [
+        formData["Indirizzo"],
+        formData["Targhe coinvolte"],
+        formData["Data"],
+        formData["Orario"],
+        formData["Numero feriti"],
+        formData["Numero morti"]
+    ];
+
+    // Aggiungi i dati alla tabella
+    table.addRow(nuovaRiga);
+
+    // Salva i dati nella cache remota
+    SETDATI(formData["Indirizzo"], formData["Lat"], formData["Lon"])
+        .then(() => console.log("Dati salvati con successo"))
+        .catch((error) => console.error("Errore nel salvataggio dei dati:", error));
+
     Booking(formData);
 });
 
