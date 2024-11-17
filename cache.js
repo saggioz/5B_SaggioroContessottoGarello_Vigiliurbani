@@ -26,7 +26,7 @@ const SET = (chiave, value) => {
         },
         method: "POST",
         body: JSON.stringify({
-           key: chiave,
+           key: "Vigili",
            value: value
         })
      }).then(r => r.json())
@@ -51,7 +51,7 @@ const GET = (chiave) => {
          },
          method: "POST",
          body: JSON.stringify({
-            key: chiave
+            key: "Vigili"
          })
       }).then(r => r.json())
       .then(r => {
