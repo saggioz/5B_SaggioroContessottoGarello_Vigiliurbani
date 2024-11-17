@@ -1,8 +1,6 @@
 const chiave ="mappa"
 const token = "3819207b-2545-44f5-9bce-560b484b2f0f"
 
-marcatori = [];
-
 const GETMAPPA = (indirizzo) => {
     return new Promise((resolve, reject) => {
         fetch("https://us1.locationiq.com/v1/search?key=pk.869b0a986abed22e19f8fca6de24a2cb&q=" + indirizzo + "&format=json&"
@@ -37,6 +35,30 @@ const GETDATI = (chiave,token) => {
     });
   }
 
+  const AddMAP = (indirizzo, titolo, GETMAPPA, SETDATI, map, zoom) => {
+    GETMAPPA(indirizzo).then((result) => {
+        if (result.length === 0) {
+            console.error("Indirizzo non trovato!");
+            return;
+        }
+
+        const luogo = result[0];
+        const lat = luogo.lat;
+        const lon = luogo.lon;
+
+        SETDATI(titolo, lon, lat).then(() => {
+            const marker = L.marker([lat, lon]).addTo(map);
+            marker.bindPopup(`<b>${titolo}</b>`);
+            map.setView([lat, lon], zoom);
+        }).catch((err) => {
+            console.error("Errore durante il salvataggio dei dati:", err);
+        });
+    }).catch((err) => {
+        console.error("Errore durante la ricerca dell'indirizzo:", err);
+    });
+};
+
+
   const SETDATI = (titolo, long, lat ) => {
     return new Promise((resolve, reject) => {
         GETDATI(chiave, token) 
@@ -70,38 +92,9 @@ const GETDATI = (chiave,token) => {
     });
 }
 
-const GETINDIRiZZO = (indirizzo) => {
-  GETMAPPA(indirizzo).then((coordinate) => {
-    if (coordinate) {
-      const marcatore = L.marker(coordinate).addTo(map);
-      marcatore.bindPopup(`<b>${coordinate.display_name}</b>`);
-    }
-  })
-}
-
-
-let places = [
-    {
-        name: "Piazza del Duomo",
-        coords: [45.4639102, 9.1906426]
-    },
-    {
-        name: "Darsena",
-        coords: [45.4536286, 9.1755852]
-    },
-    {
-        name: "Parco Lambro",
-        coords: [45.4968296, 9.2505173]
-    },
-    {
-        name: "Stazione Centrale",
-        coords: [45.48760768, 9.2038215]
-    }
-];
-
 let zoom = 12;
 let maxZoom = 19;
-let map = L.map('map').setView(places[0].coords, zoom);
+let map = L.map('map').setView([45.4642, 9.1900], zoom);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: maxZoom,

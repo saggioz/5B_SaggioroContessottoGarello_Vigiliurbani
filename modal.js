@@ -128,7 +128,9 @@ form.submit((formData) => {
     ];
     table.addRow(nuovaRiga);
 
-    addIndirizon(formData["Indirizzo"]);
+    const indirizzo = formData["Indirizzo"];
+    const titolo = `Incidente del ${formData["Data"]} alle ${formData["Orario"]}`;
+    AddMAP(indirizzo, titolo, GETMAPPA, SETDATI, map, zoom);
 });
 
 // Bottone per aprire la modale
