@@ -1,3 +1,8 @@
+import { GETMAPPA, SETDATI, AddMAP, map, zoom } from './progetto.js';
+import { Aggiorna } from './cache';
+
+
+
 const chiave ="mappa"
 const token = "3819207b-2545-44f5-9bce-560b484b2f0f"
 
