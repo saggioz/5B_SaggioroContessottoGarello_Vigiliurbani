@@ -81,6 +81,8 @@ const Aggiorna = (chiave_d,paziente)=>{
       });
    });
 };
+
+
 const crea_lista_diz =(dati) =>{
    return Object.keys(dati).map(chiave => {
       return [chiave,dati[chiave].indirizzo, dati[chiave].tarhe.join(","), dati[chiave].dataOra, dati[chiave].numeroFeriti, dati[chiave].numeroMorti];
