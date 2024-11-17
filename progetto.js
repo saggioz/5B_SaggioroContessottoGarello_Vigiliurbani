@@ -48,7 +48,7 @@ const GETDATI = (chiave,token) => {
 
         SETDATI(titolo, lon, lat).then(() => {
             const marker = L.marker([lat, lon]).addTo(map);
-            marker.bindPopup(`<b>${titolo}</b>`);
+            marker.bindPopup(`<b>${indirizzo}</b><br/>${titolo}</b>`);
             map.setView([lat, lon], zoom);
         }).catch((err) => {
             console.error("Errore durante il salvataggio dei dati:", err);
@@ -111,3 +111,6 @@ function render(){
     });
 }
 render();
+
+export { AddMAP };
+export { GETMAPPA, SETDATI, map, zoom };

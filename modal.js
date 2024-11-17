@@ -1,4 +1,6 @@
 import { table } from './tabella.js';
+import { AddMAP } from './progetto.js';
+import { GETMAPPA, SETDATI, map, zoom } from './progetto.js';
 
 /* Funzione per creare e gestire un form all'interno di una modale */
 const createForm = () => {
