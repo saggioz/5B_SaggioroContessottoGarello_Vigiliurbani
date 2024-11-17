@@ -1,6 +1,7 @@
+import { table } from "./tabella.js";
+const chiave= "Marco";
 let config;
-let result_Get;
-
+const myObject=table
 //fa la fetch al json
 const GetData = () => {
    return fetch('./conf.json')
@@ -22,11 +23,11 @@ const SET = (chiave, value) => {
     fetch("https://ws.cipiaceinfo.it/cache/set", {
         headers: {
            'Content-Type': 'application/json',
-           'key': config.cacheToken
+           'key': cacheToken
         },
         method: "POST",
         body: JSON.stringify({
-           key: "Vigili",
+           key: chiave, 
            value: value
         })
      }).then(r => r.json())
@@ -47,11 +48,12 @@ const GET = (chiave) => {
       fetch("https://ws.cipiaceinfo.it/cache/get", {
          headers: {
             'Content-Type': 'application/json',
-            'key': config.cacheToken
+            'key': cacheToken
          },
          method: "POST",
          body: JSON.stringify({
-            key: "Vigili"
+            key: chiave,
+            value: myObject
          })
       }).then(r => r.json())
       .then(r => {
@@ -64,34 +66,45 @@ const GET = (chiave) => {
 }
 
 
+
+const crea_lista_diz = (dati) => {
+   const lista = [];
+   for (const chiave in dati) {
+      lista.push({ chiave, valore: dati[chiave] });
+   }
+   return lista;
+};
+
+
 //fa sia la get che set per poi aggiornare la tabella
 const Aggiorna = (chiave_d,incidente)=>{
-   GET(config.cacheToken).then(result_get => {
-      const dati = JSON.parse(result_get);
+   GET("Vigili").then(result_get => {
+      const dati = JSON.parse(result_get) || {};
       dati[chiave_d] = incidente;
-      SET(config.cacheToken, JSON.stringify(dati)).then(r=>{
-         console.log(r)
-         if (r === "Ok") {
-            GET(config.cacheToken).then((result_get) => {
-               const lista_diz= crea_lista_diz(JSON.parse(result_get));
-               table.build(lista_diz);
-               table.render();
-           });
-         }
-      });
-   });
+      return SET("Vigili", JSON.stringify(dati));
+   })
+   .then(setResult => {
+      if (setResult === "Ok") 
+         return GET("Vigili");
+   })
+   .then(newResult => {
+      const lista_diz = crea_lista_diz(JSON.parse(newResult));
+      table.build(lista_diz);
+      table.render();
+   })
 };
 
 
-const crea_lista_diz =(dati) =>{
-   return Object.keys(dati).map(chiave => {
-      return [chiave,dati[chiave].indirizzo, dati[chiave].tarhe.join(","), dati[chiave].dataOra, dati[chiave].numeroFeriti, dati[chiave].numeroMorti];
-   });
+
+const InizializzaTabella = () => {
+   GET("Vigili")
+      .then(result_get => {
+         const lista_diz = crea_lista_diz(JSON.parse(result_get) || {});
+         table.build(lista_diz);
+         table.render();
+      })
+      
 };
 
-GetData().then(configData => {
-   config= configData;
-   render();
-});
-
+GetData().then(() => InizializzaTabella()); 
 export {Aggiorna,GetData,config};
