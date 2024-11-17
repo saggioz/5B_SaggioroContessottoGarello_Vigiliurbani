@@ -1,8 +1,3 @@
-import { GETMAPPA, SETDATI, AddMAP, map, zoom } from './progetto.js';
-import { Aggiorna } from './cache';
-
-
-
 const chiave ="mappa"
 const token = "3819207b-2545-44f5-9bce-560b484b2f0f"
 
@@ -50,7 +45,6 @@ const GETDATI = (chiave,token) => {
         const luogo = result[0];
         const lat = luogo.lat;
         const lon = luogo.lon;
-
         SETDATI(titolo, lon, lat).then(() => {
             const marker = L.marker([lat, lon]).addTo(map);
             marker.bindPopup(`<b>${indirizzo}</b><br/>${titolo}</b>`);
