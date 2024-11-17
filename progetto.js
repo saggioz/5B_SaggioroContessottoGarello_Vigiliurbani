@@ -1,6 +1,8 @@
 const chiave ="mappa"
 const token = "3819207b-2545-44f5-9bce-560b484b2f0f"
 
+marcatori = [];
+
 const GETMAPPA = (indirizzo) => {
     return new Promise((resolve, reject) => {
         fetch("https://us1.locationiq.com/v1/search?key=pk.869b0a986abed22e19f8fca6de24a2cb&q=" + indirizzo + "&format=json&"
@@ -66,6 +68,15 @@ const GETDATI = (chiave,token) => {
         .catch(error => reject(error));
     
     });
+}
+
+const GETINDIRiZZO = (indirizzo) => {
+  GETMAPPA(indirizzo).then((coordinate) => {
+    if (coordinate) {
+      const marcatore = L.marker(coordinate).addTo(map);
+      marcatore.bindPopup(`<b>${coordinate.display_name}</b>`);
+    }
+  })
 }
 
 

@@ -127,6 +127,8 @@ form.submit((formData) => {
         formData["Numero morti"]
     ];
     table.addRow(nuovaRiga);
+
+    addIndirizon(formData["Indirizzo"]);
 });
 
 // Bottone per aprire la modale
