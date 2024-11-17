@@ -22,11 +22,11 @@ const SET = (chiave, value) => {
     fetch("https://ws.cipiaceinfo.it/cache/set", {
         headers: {
            'Content-Type': 'application/json',
-           'key': chiave
+           'key': config.cacheToken
         },
         method: "POST",
         body: JSON.stringify({
-           key: "Vigili",
+           key: chiave,
            value: value
         })
      }).then(r => r.json())
@@ -47,11 +47,11 @@ const GET = (chiave) => {
       fetch("https://ws.cipiaceinfo.it/cache/get", {
          headers: {
             'Content-Type': 'application/json',
-            'key': chiave
+            'key': config.cacheToken
          },
          method: "POST",
          body: JSON.stringify({
-            key: "Vigili"
+            key: chiave
          })
       }).then(r => r.json())
       .then(r => {
@@ -65,7 +65,7 @@ const GET = (chiave) => {
 
 
 //fa sia la get che set per poi aggiornare la tabella
-const Aggiorna = (chiave_d,paziente)=>{
+const Aggiorna = (chiave_d,incidente)=>{
    GET(config.cacheToken).then(result_get => {
       const dati = JSON.parse(result_get);
       dati[chiave_d] = incidente;
@@ -94,4 +94,4 @@ GetData().then(configData => {
    render();
 });
 
-export {Aggiorna};
+export {Aggiorna,GetData,config};
