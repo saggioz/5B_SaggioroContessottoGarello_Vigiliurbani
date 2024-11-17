@@ -66,19 +66,30 @@ const GET = (chiave) => {
 
 //fa sia la get che set per poi aggiornare la tabella
 const Aggiorna = (chiave_d,paziente)=>{
-   GET(chiave).then(result_get => {
-      result_get[chiave_d]=paziente
-      SET(chiave, result_get).then(r=>{
+   GET(config.cacheToken).then(result_get => {
+      const dati = JSON.parse(result_get);
+      dati[chiave_d] = incidente;
+      SET(config.cacheToken, JSON.stringify(dati)).then(r=>{
          console.log(r)
          if (r === "Ok") {
-            GET(chiave).then((result_get) => {
-               console.log("genera")
-               console.log(result_get)
-               lista_diz=crea_lista_diz(result_get)
-               table.creaheader(giorno)
-               table.crea(lista_diz, hours,giorno);
-           })
+            GET(config.cacheToken).then((result_get) => {
+               const lista_diz= crea_lista_diz(JSON.parse(result_get));
+               table.build(lista_diz);
+               table.render();
+           });
          }
-      })
+      });
    });
-}
+};
+const crea_lista_diz =(dati) =>{
+   return Object.keys(dati).map(chiave => {
+      return [chiave,dati[chiave].indirizzo, dati[chiave].tarhe.join(","), dati[chiave].dataOra, dati[chiave].numeroFeriti, dati[chiave].numeroMorti];
+   });
+};
+
+GetData().then(configData => {
+   config= configData;
+   render();
+});
+
+export {Aggiorna};
