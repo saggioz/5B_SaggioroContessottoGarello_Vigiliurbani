@@ -28,6 +28,9 @@ const GETDATI = (chiave,token) => {
       })
         .then(r => r.json())
         .then(r => {
+          if (!r.result) {
+            r.result = [];
+          }
             const data = JSON.parse(r.result);
             resolve(data);
         })
@@ -101,15 +104,26 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
-function render(){
-    GETDATI(chiave,token).then((posti)=>{
-        console.log(posti);
-        posti.forEach((posto) => {
-            const marker = L.marker(posto.coords).addTo(map);
-            marker.bindPopup(`<b>${posto.name}</b>`);
-        });
-    });
+function render() {
+  GETDATI(chiave, token).then((posti) => {
+      console.log("Dati ricevuti:", posti);
+
+      // Se `posti` è null, undefined o non un array, inizializza come array vuoto
+      if (!Array.isArray(posti)) {
+          console.warn("Cache vuota o dati non validi. Inizializzazione...");
+          posti = [];
+      }
+
+      // Aggiungi i marker solo se ci sono dati
+      posti.forEach((posto) => {
+          const marker = L.marker(posto.coords).addTo(map);
+          marker.bindPopup(`<b>${posto.name}</b>`);
+      });
+  }).catch((error) => {
+      console.error("Errore durante il recupero dei dati:", error);
+  });
 };
+
 
 render();
 
