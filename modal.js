@@ -24,7 +24,7 @@ const createForm = () => {
                 <span class="close-button" id="closeButton">&times;</span>
                 <div id="formContent"></div>
                 <div id="Message"></div>
-                <button type="button" class="btn btn-primary" id="submit">AGGIUNGI</button>
+                <button type="button" class="btn btn-primary" id="submit">PRENOTA</button>
                 <button type="button" class="btn btn-secondary" id="cancel">ANNULLA</button>
             </div>
         `;
@@ -97,7 +97,7 @@ form.setlabels([
 // Callback per l'inserimento nella tabella
 form.submit((formData) => {
     console.log("Dati inviati:", formData);
-    
+
     const campiObbligatori = ["Indirizzo", "Data", "Orario", "Numero feriti", "Numero morti"];
     let isValid = true;
 
