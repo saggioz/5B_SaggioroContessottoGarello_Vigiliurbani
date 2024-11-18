@@ -2,12 +2,12 @@ import { SETTABELLA, GETTABELLA } from './progetto.js';
 
 const createTable = (parentElement) => {
     let data = [];
-    let originale = [];
+    let originale = []; // Aggiungi questa variabile per memorizzare i dati originali
 
     return {
         build: (dataInput) => {
             data = dataInput;
-            originale = dataInput;
+            originale = dataInput; // Memorizza i dati originali
         },
         render: () => {
             let htmlTable = "<table class='table table-bordered'>";
@@ -16,8 +16,8 @@ const createTable = (parentElement) => {
                 data.slice(1).map((row) => 
                     "<tr>" + row.map((col) => 
                         `<td>${col}</td>`
-                    ).join("")
-                ).join("") + "</tr></tbody>";
+                    ).join("") + "</tr>"
+                ).join("") + "</tbody>";
             htmlTable += "</table>";
             parentElement.innerHTML = htmlTable;
         },
@@ -29,17 +29,22 @@ const createTable = (parentElement) => {
             });
         },
         filter: function(cerca) {
-            const via_cercata = originale.filter(row => 
-                row[0].toLowerCase().includes(cerca.toLowerCase())
-            );
-            data = via_cercata;
+            if (cerca === "") {
+                data = originale; // Ripristina i dati originali se la ricerca è vuota
+            } else {
+                data = originale.filter(row => 
+                    row[0].toLowerCase().includes(cerca.toLowerCase())
+                );
+            }
             this.render();
         },
         load: function () {
             GETTABELLA().then((cachedData) => {
-                    data = cachedData;
-                    this.render();
-                    
+                originale = cachedData; // Memorizza i dati originali
+                data = cachedData;
+                this.render();
+            }).catch((err) => {
+                console.error("Errore durante il caricamento dei dati dalla cache:", err);
             });
         },
     };
@@ -48,9 +53,13 @@ const createTable = (parentElement) => {
 const table = createTable(document.querySelector("#table"));
 table.build([["INDIRIZZO", "TARGHE COINVOLTE", "DATA", "ORA", "NUMERO FERITI", "NUMERO MORTI"]]);
 
-export { table };
+// Carica i dati dalla cache
+table.load();
 
+// Aggiungi l'event listener per il pulsante di ricerca
 document.getElementById("bottoneRicerca").onclick = () => {
     const cerca = document.getElementById("ricerca").value;
     table.filter(cerca);
 };
+
+export { table };
