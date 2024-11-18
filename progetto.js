@@ -1,4 +1,4 @@
-const chiave = "mappa"
+const chiave ="mappa"
 const token = "3819207b-2545-44f5-9bce-560b484b2f0f"
 const chiaveTabella = "tableData";
 
@@ -99,10 +99,10 @@ const GETDATI = (chiave,token) => {
             const marker = L.marker([lat, lon]).addTo(map);
             marker.bindPopup(`<b>${indirizzo}</b><br/>${titolo}</b>`);
             map.setView([lat, lon], zoom);
-          }).catch((err) => {
+        }).catch((err) => {
             console.error("Errore durante il salvataggio dei dati:", err);
         });
-      }).catch((err) => {
+    }).catch((err) => {
         console.error("Errore durante la ricerca dell'indirizzo:", err);
     });
 };
@@ -146,7 +146,7 @@ let map = L.map('map').setView([45.4642, 9.1900], zoom);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: maxZoom,
-    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: 'Â© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
 function render(){
