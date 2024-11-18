@@ -4,7 +4,7 @@ const token = "3819207b-2545-44f5-9bce-560b484b2f0f"
 const GETMAPPA = (indirizzo) => {
     return new Promise((resolve, reject) => {
         fetch("https://us1.locationiq.com/v1/search?key=pk.869b0a986abed22e19f8fca6de24a2cb&q=" + indirizzo + "&format=json&"
-            
+
         )
         .then(r => r.json())
         .then(r => {
@@ -45,6 +45,7 @@ const GETDATI = (chiave,token) => {
         const luogo = result[0];
         const lat = luogo.lat;
         const lon = luogo.lon;
+
         SETDATI(titolo, lon, lat).then(() => {
             const marker = L.marker([lat, lon]).addTo(map);
             marker.bindPopup(`<b>${indirizzo}</b><br/>${titolo}</b>`);
@@ -87,7 +88,7 @@ const GETDATI = (chiave,token) => {
             .catch(error => reject(error));
         })
         .catch(error => reject(error));
-    
+
     });
 }
 
@@ -108,7 +109,8 @@ function render(){
             marker.bindPopup(`<b>${posto.name}</b>`);
         });
     });
-}
+};
+
 render();
 
 export { AddMAP };
