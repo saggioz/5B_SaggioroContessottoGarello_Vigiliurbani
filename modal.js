@@ -114,6 +114,14 @@ form.submit((formData) => {
         return;
     }
 
+    const dataInserita = new Date(formData["Data"]).getTime();
+    const oggi = Date.now();
+
+    if (dataInserita < oggi) {
+        console.error("La data non può essere precedente a oggi!");
+        return;
+    }
+
     const targhe = [
     formData["Targa1"],
     formData["Targa2"],
