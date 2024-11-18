@@ -1,5 +1,5 @@
 const chiave ="mappa"
-const token = "8b9c4f7d-363b-4f25-8fce-05bb6df76d31"
+const token = "3819207b-2545-44f5-9bce-560b484b2f0f"
 
 const GETMAPPA = (indirizzo) => {
     return new Promise((resolve, reject) => {
