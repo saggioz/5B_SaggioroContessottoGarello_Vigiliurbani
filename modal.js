@@ -131,7 +131,18 @@ form.submit((formData) => {
     table.addRow(nuovaRiga);
 
     const indirizzo = formData["Indirizzo"];
-    const titolo = `Incidente del ${formData["Data"]} alle ${formData["Orario"]}`;
+    const data = formData["Data"];
+    const orario = formData["Orario"];
+    const numeroFeriti = formData["Numero feriti"];
+    const numeroMorti = formData["Numero morti"];
+    const titolo = `
+        <b>Incidente</b><br/>
+        Data: ${data}<br/>
+        Orario: ${orario}<br/>
+        Numero feriti: ${numeroFeriti}<br/>
+        Numero morti: ${numeroMorti}
+    `;
+
     AddMAP(indirizzo, titolo, GETMAPPA, SETDATI, map, zoom);
 });
 

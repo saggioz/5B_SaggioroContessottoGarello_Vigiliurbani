@@ -51,7 +51,7 @@ const GETDATI = (chiave,token) => {
 
         SETDATI(titolo, lon, lat).then(() => {
             const marker = L.marker([lat, lon]).addTo(map);
-            marker.bindPopup(`<b>${indirizzo}</b><br/>${titolo}</b>`);
+            marker.bindPopup(titolo);
             map.setView([lat, lon], zoom);
         }).catch((err) => {
             console.error("Errore durante il salvataggio dei dati:", err);
@@ -108,13 +108,6 @@ function render() {
   GETDATI(chiave, token).then((posti) => {
       console.log("Dati ricevuti:", posti);
 
-      // Se `posti` è null, undefined o non un array, inizializza come array vuoto
-      if (!Array.isArray(posti)) {
-          console.warn("Cache vuota o dati non validi. Inizializzazione...");
-          posti = [];
-      }
-
-      // Aggiungi i marker solo se ci sono dati
       posti.forEach((posto) => {
           const marker = L.marker(posto.coords).addTo(map);
           marker.bindPopup(`<b>${posto.name}</b>`);
