@@ -1,5 +1,5 @@
 const chiave ="mappa"
-const token = "3819207b-2545-44f5-9bce-560b484b2f0f"
+const token = "8b9c4f7d-363b-4f25-8fce-05bb6df76d31"
 
 const GETMAPPA = (indirizzo) => {
     return new Promise((resolve, reject) => {
@@ -101,7 +101,7 @@ let map = L.map('map').setView([45.4642, 9.1900], zoom);
 
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: maxZoom,
-    attribution: '© <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+    attribution: '©️ <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
 
 function render() {
@@ -113,7 +113,7 @@ function render() {
           marker.bindPopup(`<b>${posto.name}</b>`);
       });
   }).catch((error) => {
-      console.error("Errore durante il recupero dei dati :", error);
+      console.error("Errore durante il recupero dei dati:", error);
   });
 };
 
