@@ -17,7 +17,7 @@ const createTable = (parentElement) => {
         addRow: function(newRow) {
             data.push(newRow);
             this.render();
-        }
+        },
     };
 };
 
