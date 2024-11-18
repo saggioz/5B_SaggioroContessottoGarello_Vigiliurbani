@@ -24,7 +24,7 @@ const createForm = () => {
                 <span class="close-button" id="closeButton">&times;</span>
                 <div id="formContent"></div>
                 <div id="Message"></div>
-                <button type="button" class="btn btn-primary" id="submit">PRENOTA</button>
+                <button type="button" class="btn btn-primary" id="submit">AGGIUNGI</button>
                 <button type="button" class="btn btn-secondary" id="cancel">ANNULLA</button>
             </div>
         `;

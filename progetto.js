@@ -1,4 +1,4 @@
-const chiave ="mappa"
+const chiave = "mappa"
 const token = "3819207b-2545-44f5-9bce-560b484b2f0f"
 
 const GETMAPPA = (indirizzo) => {
@@ -53,10 +53,10 @@ const GETDATI = (chiave,token) => {
             const marker = L.marker([lat, lon]).addTo(map);
             marker.bindPopup(titolo);
             map.setView([lat, lon], zoom);
-        }).catch((err) => {
+          }).catch((err) => {
             console.error("Errore durante il salvataggio dei dati:", err);
         });
-    }).catch((err) => {
+      }).catch((err) => {
         console.error("Errore durante la ricerca dell'indirizzo:", err);
     });
 };

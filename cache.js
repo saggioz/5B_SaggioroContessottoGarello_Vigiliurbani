@@ -1,4 +1,4 @@
-const chiave = "8b9c4f7d-363b-4f25-8fce-05bb6df76d31";
+const chiave = "3819207b-2545-44f5-9bce-560b484b2f0f";
 let result_get=[];
 
 const SET = (chiave,value) => {
@@ -48,39 +48,19 @@ const GET = (chiave) => {
    })   
 }
 
-const Aggiorna = (nuova_riga) => {
+const Aggiorna =(nuova_riga)=>{
    GET(chiave).then(result_get => {
-      console.log("Dati recuperati dalla cache:", result_get);
-
-      // Assicurati che `result_get` sia un array
-      if (!Array.isArray(result_get)) {
-         result_get = [];
-      }
-
-      // Aggiungi la nuova riga ai dati esistenti
-      result_get.push(nuova_riga);
-
-      // Prova a salvare i nuovi dati nella cache
-      SET(chiave, result_get).then(saveResult => {
-         if (saveResult !== "Ok") {
-            console.log("Errore durante il salvataggio nella cache.");
-            return;
+      console.log(result_get);
+      result_get.push(nuova_riga)
+      SET(chiave,result_get).then(r=>{
+         console.log(r)
+         if (r==="Ok"){
+            GET(chiave).then((result_get) => {
+               console.log("genera")
+               let giorno = generaData(30,result_get)
+               table.crea(giorno);
+           })
          }
-
-         // Se il salvataggio ha successo, recupera di nuovo i dati aggiornati
-         GET(chiave).then(updatedResult => {
-            console.log("Dati aggiornati recuperati:", updatedResult);
-
-            // Aggiorna la tabella
-            table.build(updatedResult);
-            table.render();
-         }).catch(err => {
-            console.error("Errore durante il recupero dei dati aggiornati:", err);
-         });
-      }).catch(err => {
-         console.error("Errore durante la chiamata a SET:", err);
-      });
-   }).catch(err => {
-      console.error("Errore durante la chiamata a GET:", err);
+      })
    });
 };
