@@ -128,7 +128,11 @@ form.submit((formData) => {
         formData["Numero feriti"],
         formData["Numero morti"]
     ];
-    table.addRow(nuovaRiga);
+    if (formData["Data"] < Date.now()) {
+        console.error("La data inserita non è valida!");
+    } else {
+        table.addRow(nuovaRiga);
+    }
 
     const indirizzo = formData["Indirizzo"];
     const data = formData["Data"];

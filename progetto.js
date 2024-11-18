@@ -113,7 +113,7 @@ function render() {
           marker.bindPopup(`<b>${posto.name}</b>`);
       });
   }).catch((error) => {
-      console.error("Errore durante il recupero dei dati:", error);
+      console.error("Errore durante il recupero dei dati :", error);
   });
 };
 
