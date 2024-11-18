@@ -154,6 +154,7 @@ form.submit((formData) => {
     AddMAP(indirizzo, titolo, GETMAPPA, SETDATI, map, zoom);
 });
 table.load();
+
 // Bottone per aprire la modale
 document.getElementById("openModalButton").onclick = () => {
     form.render();
