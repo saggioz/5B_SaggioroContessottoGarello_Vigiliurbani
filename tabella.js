@@ -1,9 +1,13 @@
 import { SETTABELLA, GETTABELLA } from './progetto.js';
+
 const createTable = (parentElement) => {
     let data = [];
+    let originale = [];
+
     return {
         build: (dataInput) => {
             data = dataInput;
+            originale = dataInput;
         },
         render: () => {
             let htmlTable = "<table class='table table-bordered'>";
@@ -24,10 +28,18 @@ const createTable = (parentElement) => {
                 console.error("Errore durante il salvataggio della tabella nella cache:", err);
             });
         },
+        filter: function(cerca) {
+            const via_cercata = originale.filter(row => 
+                row[0].toLowerCase().includes(cerca.toLowerCase())
+            );
+            data = via_cercata;
+            this.render();
+        },
         load: function () {
             GETTABELLA().then((cachedData) => {
                     data = cachedData;
-                    this.render();                
+                    this.render();
+                    
             });
         },
     };
@@ -35,4 +47,10 @@ const createTable = (parentElement) => {
 
 const table = createTable(document.querySelector("#table"));
 table.build([["INDIRIZZO", "TARGHE COINVOLTE", "DATA", "ORA", "NUMERO FERITI", "NUMERO MORTI"]]);
+
 export { table };
+
+document.getElementById("bottoneRicerca").onclick = () => {
+    const cerca = document.getElementById("ricerca").value;
+    table.filter(cerca);
+};
