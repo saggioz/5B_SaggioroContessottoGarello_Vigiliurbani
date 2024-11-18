@@ -128,11 +128,7 @@ form.submit((formData) => {
         formData["Numero feriti"],
         formData["Numero morti"]
     ];
-    if (formData["Data"] < Date.now()) {
-        console.error("La data inserita non è valida!");
-    } else {
-        table.addRow(nuovaRiga);
-    }
+    table.addRow(nuovaRiga);
 
     const indirizzo = formData["Indirizzo"];
     const data = formData["Data"];
@@ -149,7 +145,7 @@ form.submit((formData) => {
 
     AddMAP(indirizzo, titolo, GETMAPPA, SETDATI, map, zoom);
 });
-
+table.load();
 // Bottone per aprire la modale
 document.getElementById("openModalButton").onclick = () => {
     form.render();
