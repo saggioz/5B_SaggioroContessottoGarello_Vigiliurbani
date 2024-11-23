@@ -1,4 +1,4 @@
-const TOKEN = "3819207b-2545-44f5-9bce-560b484b2f0f";
+const TOKEN = "fe6f3640-d8c2-46dc-aa70-f24d4b8373f3";
 
 const registerButton = document.getElementById("register-button");
 const loginButton = document.getElementById("login-button");
@@ -55,3 +55,23 @@ const login = function (username, password) {
       alert("Login fallito. Controlla le credenziali.");
     });
 };
+
+registerButton.onclick = () => {
+    const username = registerUsername.value;
+    const password = registerPassword.value;
+    if (username && password) {
+      register(username, password);
+    } else {
+      alert("Compila tutti i campi.");
+    }
+  };
+  
+  loginButton.onclick = () => {
+    const username = loginUsername.value;
+    const password = loginPassword.value;
+    if (username && password) {
+      login(username, password);
+    } else {
+      alert("Compila tutti i campi.");
+    }
+  };
