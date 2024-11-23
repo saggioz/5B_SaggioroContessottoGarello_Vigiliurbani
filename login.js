@@ -1,4 +1,4 @@
-const TOKEN = "fe6f3640-d8c2-46dc-aa70-f24d4b8373f3";
+const TOKEN = "3819207b-2545-44f5-9bce-560b484b2f0f";
 
 const registerButton = document.getElementById("register-button");
 const loginButton = document.getElementById("login-button");
@@ -17,7 +17,9 @@ const register = function (username, password) {
     },
     body: JSON.stringify({ username, password }),
   })
-    .then((response) => response.text())
+    .then((response) => {
+        console.log("Stato HTTP:", response.status);
+        response.text()})
     .then((result) => {
       if (result === "ok") {
         alert("Registrazione completata con successo!");
