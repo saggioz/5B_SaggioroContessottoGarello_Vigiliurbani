@@ -70,12 +70,6 @@ const login = function (username, password) {
     });
 };
 
-const logout = function () {
-  sessionStorage.removeItem("Logged");
-  privateSection.classList.add("hidden");
-  alert("Logout effettuato.");
-};
-
 registerButton.onclick = () => {
     const username = registerUsername.value;
     const password = registerPassword.value;
@@ -95,5 +89,3 @@ registerButton.onclick = () => {
       alert("Compila tutti i campi.");
     }
   };
-
-  logoutButton.onclick = logout;
