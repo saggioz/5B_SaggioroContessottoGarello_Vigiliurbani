@@ -15,6 +15,22 @@ const GETMAPPA = (indirizzo) => {
     });
 };
 
+
+function setCookie(name, value, maxAgeInSeconds) {
+  document.cookie = `${name}=${value}; max-age=${maxAgeInSeconds}; path=/`;
+}
+
+function getCookie(name) {
+  const cookies = document.cookie.split(';');
+  for (let i = 0; i < cookies.length; i++) {
+      let cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+          return cookie.substring(name.length + 1);
+      }
+  }
+  return null;
+}
+
 const SETTABELLA = (data) => {
   return fetch("https://ws.cipiaceinfo.it/cache/set", {
       method: "POST",
@@ -32,6 +48,7 @@ const SETTABELLA = (data) => {
       })
       .then((result) => {
           console.log("Tabella salvata nella cache:", result);
+          setCookie('tableData', JSON.stringify(data,3600))
       })
       .catch((error) => {
           console.error("Errore durante il salvataggio della tabella nella cache:", error);
@@ -54,6 +71,12 @@ const GETTABELLA = () => {
       .then((result) => {
           const dati = JSON.parse(result.result);
           console.log("Tabella recuperata dalla cache:", dati);
+          const tableDataFromCookie = getCookie('tableData');
+            if (tableDataFromCookie) {
+                const cookieDati = JSON.parse(tableDataFromCookie);
+                console.log("Tabella recuperata dai cookie:", cookieDati);
+                return cookieDati;
+            }
           return dati
       })
       .catch((error) => {
